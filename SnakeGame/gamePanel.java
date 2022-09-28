@@ -13,12 +13,12 @@ public class gamePanel extends JPanel implements ActionListener {
 
     static final int screen_width = 600;
     static final int screen_height = 600;
-    static final int unit_size = 20;
+    static final int unit_size = 15;
     static final int game_units = (screen_height * screen_width) / (unit_size * unit_size);
-    static final int delay = 10;
+    static final int delay = 75;
     final int x[] = new int[game_units]; // holds all x co-ordinates of the snake body including its head
     final int y[] = new int[game_units];// holds all y co-ordinates of the snake body
-    int bodyparts = 6;
+    int bodyparts = 5;
     int foodEaten;
     int foodX, foodY;
     char direction = 'R'; // which direction the snake starts from
@@ -78,8 +78,8 @@ public class gamePanel extends JPanel implements ActionListener {
     public void newFood() {
         // foodX = random.nextInt((int)(screen_width/unit_size))*unit_size;
         // foodY = random.nextInt((int)(screen_height/unit_size))*unit_size;
-        foodX = random.nextInt(screen_width);
-        foodY = random.nextInt(screen_height);
+        foodX = random.nextInt(screen_width-10);
+        foodY = random.nextInt(screen_height-10);
     }
 
     public void move() {
@@ -113,6 +113,54 @@ public class gamePanel extends JPanel implements ActionListener {
 
     public void checkCollisions() {
 
+        // checks if head collides with body
+        for (int i = bodyparts; i > 0; i--) {
+
+            if ((x[0] == x[i]) && (y[0] == y[i])) {
+
+                running = false;
+
+            }
+
+        }
+
+        // check if head touches left border
+
+        if (x[0] < 0) {
+
+            running = false;
+
+        }
+
+        // check if head touches right border
+
+        if (x[0] > screen_width) {
+
+            running = false;
+
+        }
+
+        // check if head touches top border
+
+        if (y[0] < 0) {
+
+            running = false;
+
+        }
+
+        // check if head touches bottom border
+
+        if (y[0] > screen_height) {
+
+            running = false;
+
+        }
+
+        if (!running) {
+
+            timer.stop();
+
+        }
     }
 
     public void gameOver(Graphics g) {
@@ -134,7 +182,31 @@ public class gamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+            switch(e.getKeyCode()){
+                case KeyEvent.VK_LEFT:
+                if(direction != 'R'){
+                    direction = 'L';
+                }
+                break;
 
+                case KeyEvent.VK_RIGHT:
+                if(direction != 'L'){
+                    direction = 'R';
+                }
+                break;
+
+                case KeyEvent.VK_UP:
+                if(direction != 'D'){
+                    direction = 'U';
+                }
+                break;
+
+                case KeyEvent.VK_DOWN:
+                if(direction != 'U'){
+                    direction = 'D';
+                }
+                break;
+            }
         }
     }
 
