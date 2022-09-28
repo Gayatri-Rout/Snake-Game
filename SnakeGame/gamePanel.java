@@ -52,7 +52,11 @@ public class gamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
         // create a grid for easier visualization
         for(int i = 0; i<screen_height/unit_size; i++){
-            g.drawLine(i*unit_size, 0, i*unit_size, screen_height);
+            // vertical grid lines
+            g.drawLine(i*unit_size, 0, i*unit_size, screen_height); 
+
+            // horizontal grid lines
+            g.drawLine(0, i*unit_size, screen_width, i*unit_size);
         }
     }
 
