@@ -13,9 +13,9 @@ public class gamePanel extends JPanel implements ActionListener {
 
     static final int screen_width = 600;
     static final int screen_height = 600;
-    static final int unit_size = 25;
-    static final int game_units = (screen_height * screen_width) / unit_size;
-    static final int delay = 75;
+    static final int unit_size = 20;
+    static final int game_units = (screen_height * screen_width) / (unit_size * unit_size);
+    static final int delay = 10;
     final int x[] = new int[game_units]; // holds all x co-ordinates of the snake body including its head
     final int y[] = new int[game_units];// holds all y co-ordinates of the snake body
     int bodyparts = 6;
@@ -39,7 +39,7 @@ public class gamePanel extends JPanel implements ActionListener {
     public void startGame() {
         newFood();
         running = true;
-        timer = new Timer(delay,this);
+        timer = new Timer(delay, this);
         timer.start();
 
     }
@@ -51,21 +51,60 @@ public class gamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
         // create a grid for easier visualization
-        for(int i = 0; i<screen_height/unit_size; i++){
+        for (int i = 0; i < screen_height / unit_size; i++) {
             // vertical grid lines
-            g.drawLine(i*unit_size, 0, i*unit_size, screen_height); 
+            g.drawLine(i * unit_size, 0, i * unit_size, screen_height);
 
             // horizontal grid lines
-            g.drawLine(0, i*unit_size, screen_width, i*unit_size);
+            g.drawLine(0, i * unit_size, screen_width, i * unit_size);
+        }
+
+        // draw the food
+        g.setColor(Color.CYAN);
+        g.fillOval(foodX, foodY, unit_size, unit_size);
+
+        // draw head and body
+        for (int i = 0; i < bodyparts; i++) {
+            if (i == 0) {
+                g.setColor(Color.white);
+                g.fillRect(x[i], y[i], unit_size, unit_size);
+            } else {
+                g.setColor(Color.yellow);
+                g.fillRect(x[i], y[i], unit_size, unit_size);
+            }
         }
     }
 
     public void newFood() {
-
+        // foodX = random.nextInt((int)(screen_width/unit_size))*unit_size;
+        // foodY = random.nextInt((int)(screen_height/unit_size))*unit_size;
+        foodX = random.nextInt(screen_width);
+        foodY = random.nextInt(screen_height);
     }
 
     public void move() {
+        for (int i = bodyparts; i > 0; i--) {
+            x[i] = x[i - 1];
+            y[i] = y[i - 1];
+        }
 
+        switch (direction) {
+            case 'U':
+                y[0] = y[0] - unit_size;
+                break;
+
+            case 'D':
+                y[0] = y[0] + unit_size;
+                break;
+
+            case 'L':
+                x[0] = x[0] - unit_size;
+                break;
+
+            case 'R':
+                x[0] = x[0] + unit_size;
+                break;
+        }
     }
 
     public void checkFood() {
@@ -82,7 +121,12 @@ public class gamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+        if (running) {
+            move(); // move the snake
+            checkFood(); // Is the food around?
+            checkCollisions(); // did snake head collide with food?
+        }
+        repaint();
 
     }
 
