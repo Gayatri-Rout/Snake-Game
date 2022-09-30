@@ -1,7 +1,6 @@
 import javax.swing.JFrame;
 
 public class gameFrame extends JFrame{
-    
     // create default constructor
     gameFrame(){
 

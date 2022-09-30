@@ -13,9 +13,9 @@ import javax.swing.Timer;
 
 public class gamePanel extends JPanel implements ActionListener {
 
-    static final int screen_width = 600;
-    static final int screen_height = 600;
-    static final int unit_size = 15;
+    static final int screen_width = 500;
+    static final int screen_height = 500;
+    static final int unit_size = 10;
     static final int game_units = (screen_height * screen_width) / (unit_size * unit_size);
     static final int delay = 75;
     final int x[] = new int[game_units]; // holds all x co-ordinates of the snake body including its head
@@ -55,11 +55,11 @@ public class gamePanel extends JPanel implements ActionListener {
         if (running) {
             // // create a grid for easier visualization
             // for (int i = 0; i < screen_height / unit_size; i++) {
-            //     // vertical grid lines
-            //     g.drawLine(i * unit_size, 0, i * unit_size, screen_height);
+            // // vertical grid lines
+            // g.drawLine(i * unit_size, 0, i * unit_size, screen_height);
 
-            //     // horizontal grid lines
-            //     g.drawLine(0, i * unit_size, screen_width, i * unit_size);
+            // // horizontal grid lines
+            // g.drawLine(0, i * unit_size, screen_width, i * unit_size);
             // }
 
             // draw the food
@@ -70,10 +70,10 @@ public class gamePanel extends JPanel implements ActionListener {
             for (int i = 0; i < bodyparts; i++) {
                 if (i == 0) {
                     g.setColor(Color.white);
-                    g.fillRect(x[i], y[i], unit_size, unit_size);
+                    g.fillOval(x[i], y[i], unit_size, unit_size);
                 } else {
                     g.setColor(Color.yellow);
-                    g.fillRect(x[i], y[i], unit_size, unit_size);
+                    g.fillOval(x[i], y[i], unit_size, unit_size);
                 }
             }
             // Display score during the game
@@ -88,8 +88,8 @@ public class gamePanel extends JPanel implements ActionListener {
     }
 
     public void newFood() {
-        foodX = random.nextInt((int)(screen_width/unit_size))*unit_size;
-        foodY = random.nextInt((int)(screen_height/unit_size))*unit_size;
+        foodX = random.nextInt((int) (screen_width / unit_size)) * unit_size;
+        foodY = random.nextInt((int) (screen_height / unit_size)) * unit_size;
         // foodX = random.nextInt(screen_width - 10);
         // foodY = random.nextInt(screen_height - 10);
     }
@@ -187,14 +187,21 @@ public class gamePanel extends JPanel implements ActionListener {
         g.setColor(Color.red);
         g.setFont(new Font("Agames", Font.ITALIC, 50));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (screen_width - metrics.stringWidth("Game Over")) / 2, screen_height / 2);
+        g.drawString("Game Over", (screen_width - metrics.stringWidth("Game Over")) / 2, screen_height / 3);
 
         // Display score after the game
         g.setColor(Color.red);
         g.setFont(new Font("Agames", Font.ITALIC, 20));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Score: " + foodEaten, (screen_width - metrics2.stringWidth("Score: " + foodEaten)) / 2,
-               ((screen_height/2) + 50));
+                ((screen_height / 3) + 50));
+
+        // Press Enter to restart
+        g.setColor(Color.orange);
+        g.setFont(new Font("Agames", Font.ITALIC, 10));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("Press 'Enter' to Restart", (screen_width - metrics3.stringWidth("Press 'Enter' to Restart")) / 2,
+                ((screen_height / 3) + 80));
     }
 
     @Override
