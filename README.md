@@ -1,13 +1,13 @@
-####Snake-Game\n
-A java refresher project for coders like me i.e we have an on/off relationship with coding.\n
-<b>Current Features:</b>\n
-1. snake eats food and grows\n
-2. crashes with boundary; game over\n
-<b>Features to add:</b>\n
-1. restart option\n
-2. username option\n
-3. create rounded edges for snake\n
-4. make snake and food glow\n
-5. add sound effects\n
-6. add option to turn off sound effects\n
+# Snake-Game
+A java refresher project for coders like me i.e we have an on/off relationship with coding.
+##### <b>Current Features:</b>
+1. snake eats food and grows
+2. crashes with boundary; game over
+##### <b>Features to add:</b>
+1. restart option
+2. username option
+3. create rounded edges for snake
+4. make snake and food glow
+5. add sound effects
+6. add option to turn off sound effects
 
