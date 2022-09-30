@@ -1,4 +1,4 @@
-<h4>Snake-Game</h4>\n
+####Snake-Game\n
 A java refresher project for coders like me i.e we have an on/off relationship with coding.\n
 <b>Current Features:</b>\n
 1. snake eats food and grows\n
