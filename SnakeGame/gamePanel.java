@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,36 +52,46 @@ public class gamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
-        // create a grid for easier visualization
-        for (int i = 0; i < screen_height / unit_size; i++) {
-            // vertical grid lines
-            g.drawLine(i * unit_size, 0, i * unit_size, screen_height);
+        if (running) {
+            // // create a grid for easier visualization
+            // for (int i = 0; i < screen_height / unit_size; i++) {
+            //     // vertical grid lines
+            //     g.drawLine(i * unit_size, 0, i * unit_size, screen_height);
 
-            // horizontal grid lines
-            g.drawLine(0, i * unit_size, screen_width, i * unit_size);
-        }
+            //     // horizontal grid lines
+            //     g.drawLine(0, i * unit_size, screen_width, i * unit_size);
+            // }
 
-        // draw the food
-        g.setColor(Color.CYAN);
-        g.fillOval(foodX, foodY, unit_size, unit_size);
+            // draw the food
+            g.setColor(Color.CYAN);
+            g.fillOval(foodX, foodY, unit_size, unit_size);
 
-        // draw head and body
-        for (int i = 0; i < bodyparts; i++) {
-            if (i == 0) {
-                g.setColor(Color.white);
-                g.fillRect(x[i], y[i], unit_size, unit_size);
-            } else {
-                g.setColor(Color.yellow);
-                g.fillRect(x[i], y[i], unit_size, unit_size);
+            // draw head and body
+            for (int i = 0; i < bodyparts; i++) {
+                if (i == 0) {
+                    g.setColor(Color.white);
+                    g.fillRect(x[i], y[i], unit_size, unit_size);
+                } else {
+                    g.setColor(Color.yellow);
+                    g.fillRect(x[i], y[i], unit_size, unit_size);
+                }
             }
+            // Display score during the game
+            g.setColor(Color.red);
+            g.setFont(new Font("Agames", Font.ITALIC, 20));
+            FontMetrics metrics = getFontMetrics(g.getFont());
+            g.drawString("Score: " + foodEaten, (screen_width - metrics.stringWidth("Score: " + foodEaten)) / 2,
+                    g.getFont().getSize());
+        } else {
+            gameOver(g);
         }
     }
 
     public void newFood() {
-        // foodX = random.nextInt((int)(screen_width/unit_size))*unit_size;
-        // foodY = random.nextInt((int)(screen_height/unit_size))*unit_size;
-        foodX = random.nextInt(screen_width-10);
-        foodY = random.nextInt(screen_height-10);
+        foodX = random.nextInt((int)(screen_width/unit_size))*unit_size;
+        foodY = random.nextInt((int)(screen_height/unit_size))*unit_size;
+        // foodX = random.nextInt(screen_width - 10);
+        // foodY = random.nextInt(screen_height - 10);
     }
 
     public void move() {
@@ -108,6 +120,13 @@ public class gamePanel extends JPanel implements ActionListener {
     }
 
     public void checkFood() {
+        if ((x[0] == foodX) && (y[0] == foodY)) {
+
+            bodyparts++;
+            foodEaten++;
+            newFood();
+
+        }
 
     }
 
@@ -164,7 +183,18 @@ public class gamePanel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g) {
+        // Game over text
+        g.setColor(Color.red);
+        g.setFont(new Font("Agames", Font.ITALIC, 50));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Game Over", (screen_width - metrics.stringWidth("Game Over")) / 2, screen_height / 2);
 
+        // Display score after the game
+        g.setColor(Color.red);
+        g.setFont(new Font("Agames", Font.ITALIC, 20));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Score: " + foodEaten, (screen_width - metrics2.stringWidth("Score: " + foodEaten)) / 2,
+               ((screen_height/2) + 50));
     }
 
     @Override
@@ -182,30 +212,30 @@ public class gamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            switch(e.getKeyCode()){
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                if(direction != 'R'){
-                    direction = 'L';
-                }
-                break;
+                    if (direction != 'R') {
+                        direction = 'L';
+                    }
+                    break;
 
                 case KeyEvent.VK_RIGHT:
-                if(direction != 'L'){
-                    direction = 'R';
-                }
-                break;
+                    if (direction != 'L') {
+                        direction = 'R';
+                    }
+                    break;
 
                 case KeyEvent.VK_UP:
-                if(direction != 'D'){
-                    direction = 'U';
-                }
-                break;
+                    if (direction != 'D') {
+                        direction = 'U';
+                    }
+                    break;
 
                 case KeyEvent.VK_DOWN:
-                if(direction != 'U'){
-                    direction = 'D';
-                }
-                break;
+                    if (direction != 'U') {
+                        direction = 'D';
+                    }
+                    break;
             }
         }
     }
