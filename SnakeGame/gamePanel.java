@@ -197,11 +197,11 @@ public class gamePanel extends JPanel implements ActionListener {
                 ((screen_height / 3) + 50));
 
         // Press Enter to restart
-        g.setColor(Color.orange);
-        g.setFont(new Font("Agames", Font.ITALIC, 10));
-        FontMetrics metrics3 = getFontMetrics(g.getFont());
-        g.drawString("Press 'Enter' to Restart", (screen_width - metrics3.stringWidth("Press 'Enter' to Restart")) / 2,
-                ((screen_height / 3) + 80));
+        // g.setColor(Color.orange);
+        // g.setFont(new Font("Agames", Font.ITALIC, 10));
+        // FontMetrics metrics3 = getFontMetrics(g.getFont());
+        // g.drawString("Press 'Enter' to Restart", (screen_width - metrics3.stringWidth("Press 'Enter' to Restart")) / 2,
+        //         ((screen_height / 3) + 80));
     }
 
     @Override
