@@ -1,4 +1,4 @@
-# Snake-Game
+# Snake-Game :snake: :yellow_circle:
 A java refresher project for coders like me i.e we have an on/off relationship with coding.
 ##### <b>Current Features:</b>
 1. snake eats food and grows
